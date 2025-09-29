@@ -1,19 +1,17 @@
 use risc0_zkvm::guest::env;
 
 fn main() {
-    // TODO: Implement your guest code here
+    //The guest code to check if a person is 18 or older 
 
     // read the input
     let input: u32 = env::read();
 
-    // Initialize the logger
-    //env_logger::init();
-
-    // Log messages
-    //info!("This is an info message.");
-
-    // TODO: do something with the input
+    // Logic circuit with the input 
+    assert!(input >= 18, "The person is underage!");
 
     // write public output to the journal
+    //TODO: make this a msg such as "This person is at lest 18 y.o." (env::commit(&("msg"))) instead of using println
     env::commit(&input);
+
+    println!("Person was not underage, the guest program run correctly and the input has been committed: {}", input);
 }
