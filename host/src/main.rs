@@ -5,11 +5,13 @@ use methods::{OVER18_ELF, OVER18_ID};
 use risc0_zkvm::{default_prover, ExecutorEnv, Receipt}; 
 // ExecutorEnv is responsible for managing guest-readable memory.
 // The host makes the value input available to the guest program before execution by adding input to the executor environment.
+use std::sync::Once;
 
+static TRACING_INIT: Once = Once::new();
 
 
 fn main(){
-    let input: u32 = 43;
+    let input: u32 = 1;
 
     let result: bool = zkvm(input).is_ok();
 
@@ -20,10 +22,12 @@ fn main(){
 
 fn zkvm(input: u32) -> Result<(), ()> {
     // Initialize tracing. In order to view logs, run `RUST_LOG=info cargo run`
-    tracing_subscriber::fmt()
+    TRACING_INIT.call_once(|| {
+        tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::filter::EnvFilter::from_default_env())
         .init();
-
+    });
+    
     // An executor environment describes the configurations for the zkVM
     // including program inputs.
     // A default ExecutorEnv can be created like so:
@@ -78,14 +82,30 @@ mod tests {
     #[test]
     fn is_18() {
         let age : u32 = 18;
-        assert!(zkvm(age).is_ok());
+        let result = std::panic::catch_unwind(|| {
+        zkvm(age).unwrap();
+        });
+        assert!(result.is_ok(), "Expected OK for 18yo person!");
     }
 
     #[test]
     fn is_over_18() {
         let age: u32 = rand::thread_rng().gen_range(19..100);
-        println!("age: {}", age);
-        assert!(zkvm(age).is_ok());
+        let result = std::panic::catch_unwind(|| {
+        zkvm(age).unwrap();
+        });
+        assert!(result.is_ok(), "Expected OK for person over 18!");
+    }
+
+    #[test]
+    fn is_underage() {
+        let age: u32 = rand::thread_rng().gen_range(0..17);
+
+        let result = std::panic::catch_unwind(|| {
+        zkvm(age).unwrap();
+        });
+        
+        assert!(result.is_err(), "Expected a panic for underage person!");
     }
 }
 
