@@ -49,8 +49,6 @@ use const_random::const_random  ;
 //cmd to run tests: cargo test 
 #[cfg(test)]
 mod tests {
-    use core::error;
-
     use super::*;
 
 
