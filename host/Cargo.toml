@@ -7,8 +7,8 @@ edition = "2021"
 log = "0.4"
 env_logger = "0.10"
 methods = { path = "../methods" }
+const-random = "0.1.0" # Use the latest version
 risc0-zkvm = { version = "^3.0.3" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 serde = "1.0"
-rand = "0.8"
 
