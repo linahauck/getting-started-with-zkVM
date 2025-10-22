@@ -40,27 +40,26 @@ mod tests {
     #[test]
     fn is_18() {
         const TEST_FACTOR : u32 = 18;
-        let result = std::panic::catch_unwind(|| {
+        let result = 
         not_underage(TEST_FACTOR);
-        });
+        
         assert!(result.is_ok(), "Expected OK for 18yo person!");
     }
 
     #[test]
     fn is_over_18() {
         const TEST_FACTOR : u32 = random_age_generator(19,100);
-        let result = std::panic::catch_unwind(|| {
+        let result = 
         not_underage(TEST_FACTOR);
-        });
+
         assert!(result.is_ok(), "Expected OK for person over 18!");
     }
 
     #[test]
     fn is_underage() {
         const TEST_FACTOR : u32 = random_age_generator(0,17);
-        let result = std::panic::catch_unwind(|| {
+        let result = 
         not_underage(TEST_FACTOR);
-        });
         
         assert!(result.is_err(),  "Expected a panic for underage person!");
     }
