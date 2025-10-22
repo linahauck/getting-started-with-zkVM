@@ -13,9 +13,8 @@ fn main() {
     let age: u32 = env::read();
 
     // Logic circuit
-    assert!(age >= 18, "The person is underage!");
+    let is_valid = &(age >= 18);
+    assert!(is_valid, "UNVALID PROOF: This person might not be over 18!");
 
-    // write public output to the journal
-    //TODO: make this a msg such as "This person is at lest 18 y.o." (env::commit(&("msg"))) instead of using println
-    env::commit(&("This is a valid proof that this person is at least 18 y.o."));
+    env::commit(&("VALID PROOF: This person is at least 18 years old."));
 }

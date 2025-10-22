@@ -11,4 +11,5 @@ const-random = "0.1.0" # Use the latest version
 risc0-zkvm = { version = "^3.0.3" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 serde = "1.0"
+anyhow = "1.0.100"
 

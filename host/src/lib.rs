@@ -1,11 +1,11 @@
+use anyhow::{Context, Result};
 use risc0_zkvm::{ExecutorEnv, Receipt, default_prover};
 use methods::{OVER18_ELF};
 
 // By running this someone can produce a receipt that proves that 
-// they are not underage
+// they are over 18 years old
 
-
-pub fn not_underage(age: u32) -> (Receipt, String) {
+pub fn not_underage(age: u32) -> Result<Receipt> {
     // An executor environment describes the configurations for the zkVM
     // including program inputs.
     // A default ExecutorEnv can be created like so:
@@ -24,25 +24,10 @@ pub fn not_underage(age: u32) -> (Receipt, String) {
         .build()
         .unwrap();
 
-    // Obtain the default prover.
     let prover = default_prover();
 
-    // Proof information by proving the specified ELF binary.
-    // This struct contains the receipt along with statistics about execution of the guest
-    // Then extract the receipt.
-    let receipt: Receipt = prover
-        .prove(env, OVER18_ELF)
-        .unwrap()
-        .receipt;
-
-    // Extract journal of receipt
-    let journal: String = receipt.journal.decode().expect(
-        "Journal output should deserialize into the same types (& order) that it was written",
-    );
-
-    println!("journal: {}", journal);
-
-    (receipt, journal)
+    let receipt = prover.prove(env, OVER18_ELF).with_context(|| format!("Guest program failed. There is no valid proof of being over 18."))?.receipt;
+    Ok(receipt)
 }
 
 use const_random::const_random  ;
