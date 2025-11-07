@@ -14,7 +14,7 @@ fn main() {
 
     // Logic circuit
     let is_valid = &(age >= 18);
-    assert!(is_valid, "UNVALID PROOF: This person might not be over 18!");
+    assert!(is_valid, "UNVALID PROOF: This person is not be over 18!");
 
     env::commit(&("VALID PROOF: This person is at least 18 years old."));
 }

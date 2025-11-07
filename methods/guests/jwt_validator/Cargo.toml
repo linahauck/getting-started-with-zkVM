@@ -1,11 +1,11 @@
 [package]
-name = "over18"
+name = "jwt_validator"
 version = "0.1.0"
 edition = "2024"
 
 [workspace]
 
-
 [dependencies]
 risc0-zkvm = { version = "^3.0.3", default-features = false, features = ['std'] }
+
 

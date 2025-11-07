@@ -1,9 +1,23 @@
 use anyhow::{Context, Result};
 use risc0_zkvm::{ExecutorEnv, Receipt, default_prover};
-use methods::{OVER18_ELF};
+use methods::{OVER18_ELF}; //TODO: JWT_VALIDATOR_ELF
+
 
 // By running this someone can produce a receipt that proves that 
 // they are over 18 years old
+
+// pub fn confirm_jwt_integrity(token: &str) -> Result<Receipt> {
+//     let env = ExecutorEnv::builder()
+//         .write(&token)
+//         .unwrap()
+//         .build()
+//         .unwrap();
+
+//     let prover = default_prover();
+
+//     let receipt = prover.prove(env, JWT_VALIDATOR_ELF).with_context(|| format!("Guest program failed. There is no valid proof of confirmed integrity."))?.receipt;
+//     Ok(receipt)
+// }
 
 pub fn not_underage(age: u32) -> Result<Receipt> {
     // An executor environment describes the configurations for the zkVM

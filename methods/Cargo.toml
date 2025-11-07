@@ -8,4 +8,4 @@ risc0-build = { version = "^3.0.3" }
 risc0-zkvm = { version = "^3.0.3" }
 
 [package.metadata.risc0]
-methods = ["guest"]
+methods = ["guests/over18", "guests/jwt_validator"]
